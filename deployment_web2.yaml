@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: mpowerstaging
+  name: mpower-web-staging
+  labels:
+    app: mpower-staging
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: mpower-staging
+      tier: web
+  template:
+    metadata:
+      labels:
+        app: mpower-staging
+        tier: web
+    spec:
+      containers:
+        - name: mpower-app-staging
+          imagePullPolicy: Always
+          #image: 562932108947.dkr.ecr.ap-southeast-1.amazonaws.com/marketing-app:GREEN_20200416_101911
+          #image: asia.gcr.io/mpekpower/maap:GREEN_20200417_143006
+          #image: asia.gcr.io/mpekpower/mpower-app:GREEN_20200506_120447
+          image: asia.gcr.io/gcp-shared-host-nonprod-276203/mpower-app:GREEN_20200506_120447
+          ports:
+          - containerPort: 3000  
+          command:
+          - /bin/sh
+          - -c
+          - |
+            #rm -f .env*
+            /bin/echo '{"type": "service_account","project_id": "bigquery-test-270003","private_key_id": "15066fe6d58439e8cba55d98d9223b23b2e346cb","private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDI1Jgqi5xtOu18\naXKVK2GE9wxcr0NG6pMpUFWeINge0BMiIcLZRcwWjG+iorRtAY6n6eZ2qkW3Yw76\nYdcDC3NMzIS9dx7RBzIT0XxTWsQFDlDaQNyX4t/MKk2P48e+ObUB4MJJNZoyi4Nx\nZci8ougBOTajutYLcD6kKIvbrCJhlv8jEP0jgaSfd+defz4stF0HIW9I82aWLAIV\n21ODrsUEs+6uncsVYWlXXIZquPthWkbG7v8tCd/lKHXSFiO2jDmJI4DO/ekU71HJ\nTMW5g1qY97csBVFYb888cKLBwV2CNQyJx2YFSv0lN+3okD2PQSzrgBjpTTJl5yQj\n+2slpM6xAgMBAAECggEARaCbXwjHQ4GOK7edX8VKCqDiWtHyx8f1HHo7LNcjRs+K\nCqfc15pgzyKCY8b4OeCz1lh8LAENqa6A12MLegVCxMoVbWC6wOq3PHLBIV8THdOg\nSYL6V/hy8eRqvqvQqQ11yYBkq6AXZVXETRDmXyw1tpLg9DQHGLEiLqTWFGOiCeYE\nNRA7z2OEJqt6tc4MljD8jl2sVnvjwnIpuAwylzXVL1KNXy3EH3+tT8ehTuI5UCES\n7Eq2vRBUZcdhPPLS6pwOL73j52BrVoPqCI8r1Ia7TSXPBvtgbmSsc4fuBc/f0Dn4\nP7kJS7ZoF6r33amAsVK1XJlirmSKsQWsnCk5GDLOrwKBgQDkgJBu02ziWeI13vCQ\n6tUA/RhIwpQ2dSeCVhMuRrf/Sd5lFtWGd3dC9boZ3av6XQUIbngG1CAZb7Unfsn6\n0YRWfwxkdCytO11TWRZ2wl1/cJyJrzXRFvNEkrTz3vDOs+eeTDnrvM8rWaX/38TF\naXkc5O+L1ic+e0xy/+ElB+z5wwKBgQDg/4za6MExLkLIKIpZ/hQ3GMmAbsPjctUw\nBzEvUrFl2ktOy09K1rxV2tO+ZK/Y63lTOAxlgkGUDLR01mMBPG2crh42fxqviHrX\nBvL9fhWyGkEjU8LFOn6FTxey8enW2cZKYDeyfC3sMU8iRBxVTojryEXkyMAqwdS8\nwk7jIzkaewKBgQC/WjKZvJA4VZEsD9Bha2aI92o4tEmt+Rnm+fICFNLNBK0q9p5F\nhxHmjyUTuCDm/rLSRsBY55ch9fw8YN8AHii2zpowHWG0iDw1Kiu3tDjcGg/c9U8a\nFCAQUtMaTp5WWy4h0C/JDEppQR/UUS3VK+hym/1Gm0Yt+s8glsuSWTrIRQKBgEfQ\niW7d17wQ3fPxLKeot18WpEpAEHoqju0zfnlyVXkDAgJ2Viq2+4oTvH4KuS3tit4L\nB7nmp3PP0lFwlE0ysnHOCYqvax8X2s2DRE+wzM/6HUxfUc2N7BA0vIW7PT38aJQY\nve5UQHwhCPcQ8lIwLPfFBroNcXi0QWi2RGOvPGy9AoGBAOMH9KyhMrOUc20B3rxZ\nnDI7XyGui92PfY+o3joRhaI7E92HY7K6zw7hjJkK0g3PxekRDc5lW8GvvVAFYmub\nbYg0cM48Ws+JhqVKJTR2b6gJVKwlyJ0DMik0eyiPBw/z95kZdEM4sin49h0VD6fY\nlTFTXBn8LhjEQadYCYGbq2an\n-----END PRIVATE KEY-----\n","client_email": "hra-insert-test@bigquery-test-270003.iam.gserviceaccount.com","client_id": "111081355238116667109","auth_uri": "https://accounts.google.com/o/oauth2/auth","token_uri": "https://oauth2.googleapis.com/token","auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs","client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/hra-insert-test%40bigquery-test-270003.iam.gserviceaccount.com"}' >bigquery.json 
+            echo GREEN_20200506_120447 >public/release_tag.txt
+            #cp parameter_store_to_env_staging.sh parameter_store_to_env_staging.sh
+            #sed -i 's/staging/staging/g' ./parameter_store_to_env_staging.sh
+
+            touch .env
+            touch s.sh
+            echo 'while [ ! -f .env ]' >>s.sh
+            echo 'do' >>s.sh
+            echo 'sleep 15' >>s.sh
+            echo ' done' >>s.sh
+            #echo 'bin/rake db:migrate || bin/rake db:setup' >>s.sh
+            #echo 'bundle config disable_exec_load true' >>s.sh
+            echo 'mkdir -p tmp/pids' >>s.sh
+            echo 'touch tmp/pids/server.pid' >>s.sh
+            echo 'bundle exec puma -C config/puma.rb -p 3000' >>s.sh
+            chmod +x s.sh
+            ./s.sh
+            #bin/rake db:migrate || bin/rake db:setup
+            #bundle config disable_exec_load true
+            ##mkdir -p tmp/pids
+            #touch tmp/pids/server.pid
+            #bundle exec puma -C config/puma.rb -p 3000
+          #command: ["rails"]
+          #args: ["server", "-b", "0.0.0.0"]
+          #command: ["/usr/local/bundle/bin/bundle"]
+          #args: ["exec", "puma", "-C", "config/puma.rb", "-p", "3000"]
+
+          #livenessProbe:
+          #  httpGet:
+          #    path: /coreui
+          #    port: 3000
+          #  initialDelaySeconds: 10
+          #  timeoutSeconds: 1
+          #readinessProbe:
+          #  httpGet:
+          #    path: /coreui
+          #    port: 3000
+          #  initialDelaySeconds: 10
+          #  timeoutSeconds: 1
+          env:
+          - name: SECRET_KEY_BASE
+            valueFrom:
+              configMapKeyRef:
+                name: mpower-backend-cloud-configmap-staging
+                key: SECRET_KEY_BASE
+          - name: RAILS_ENV
+            valueFrom:
+              configMapKeyRef:
+                name: mpower-backend-cloud-configmap-staging
+                key: RAILS_ENV
+#      nodeSelector:
+#        nodegroup: m5
+
